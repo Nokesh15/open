@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Raksha Bandhan! 🌸</title>
+    <meta name="description"
+        content="A personalized digital Raksha Bandhan celebration for my amazing sister. Light the diya, tie the Rakhi, play music, and unwrap your gift!">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Great+Vibes&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background sparkle canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Sound Toggle Button -->
+    <button id="soundToggle" class="sound-fab" aria-label="Toggle festive music">
+        <i class="fa-solid fa-music"></i>
+        <span class="sound-wave-container">
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+        </span>
+    </button>
+
+    <div class="app-container">
+
+        <!-- Hero / Header Section -->
+        <header class="hero-section">
+            <div class="festive-garland">
+                <!-- CSS Garland of marigold flowers -->
+                <div class="marigold-string"></div>
+            </div>
+            <h1 class="main-title">Happy <span class="accent-gold">Raksha Bandhan</span></h1>
+            <p class="greeting-subtitle" id="recipientGreeting"></p>
+            <div class="mandala-container">
+                <div class="mandala-glow"></div>
+                <img src="assets/celebration.png" alt="Raksha Bandhan Celebration" class="hero-image" id="heroImage">
+            </div>
+            <p class="intro-quote">"A bond of love, a thread of protection, and a lifetime of beautiful memories
+                together."</p>
+
+            <div class="scroll-down-indicator" onclick="scrollToSection('ritual-section')">
+                <span>Proceed to Rituals</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </header>
+
+        <!-- Interactive Rituals Area -->
+        <section id="ritual-section" class="display-section card-glass">
+            <div class="section-badge">Step 1: The Auspicious Tilak & Rakhi</div>
+            <h2 class="section-title">Perform Virtual Pooja</h2>
+            <p class="section-desc">Instill the festive ritual! Tap the Tilak bowl to apply it, light the Diya, drag the
+                sweet, and drag the sacred Rakhi thread onto your brother's wrist.</p>
+
+            <div class="pooja-grid">
+
+                <!-- Sacred Thali -->
+                <div class="thali-wrapper">
+                    <div class="thali-plate" id="thaliPlate">
+                        <!-- Thali base image -->
+                        <img src="assets/thali.png" alt="Pooja Thali" class="thali-img">
+
+                        <!-- Interactive Diya -->
+                        <div class="thali-item diya-item" id="thaliDiya" onclick="igniteDiya()"
+                            title="Click to light the Diya">
+                            <div class="diya-glow"></div>
+                            <div class="diya-oil"></div>
+                            <div class="diya-flame" id="diyaFlame"></div>
+                            <span class="item-label">Diya</span>
+                        </div>
+
+                        <!-- Tilak Plate -->
+                        <div class="thali-item tilak-item" id="thaliTilak" onclick="pickTilak()"
+                            title="Click to pick Tilak">
+                            <div class="roli-powder"></div>
+                            <div class="chawal-grains"></div>
+                            <span class="item-label">Tilak</span>
+                        </div>
+
+                        <!-- Sweet (Ladoo) -->
+                        <div class="thali-item sweet-item draggable" id="thaliSweet" draggable="true"
+                            title="Drag to feed a sweet">
+                            <div class="ladoo"></div>
+                            <span class="item-label">Ladoo</span>
+                        </div>
+
+                        <!-- Sacred Rakhi -->
+                        <div class="thali-item rakhi-item draggable" id="thaliRakhi" draggable="true"
+                            title="Drag to tie Rakhi">
+                            <div class="rakhi-thread-left"></div>
+                            <div class="rakhi-center">
+                                <div class="rakhi-flower"></div>
+                                <div class="rakhi-bead"></div>
+                            </div>
+                            <div class="rakhi-thread-right"></div>
+                            <span class="item-label">Sacred Rakhi</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- The Target: Wrist & Face Zone -->
+                <div class="interact-target-wrapper">
+
+                    <div class="target-card">
+                        <h3>The Ritual Board</h3>
+
+                        <!-- Virtual Face with Tilak Spot -->
+                        <div class="interactive-avatar-container">
+                            <div class="avatar-head">
+                                <!-- Roli Tilak Spot on Forehead -->
+                                <div class="forehead-tilak" id="foreheadTilak"></div>
+                            </div>
+                            <span class="avatar-helper">Apply Tilak here</span>
+                        </div>
+
+                        <!-- Virtual Wrist for Rakhi -->
+                        <div class="wrist-container" id="wristDropzone">
+                            <div class="wrist-arm">
+                                <span class="wrist-label" id="wristLabel">Tie Rakhi Here</span>
+                            </div>
+                            <!-- Tiled Rakhi will appear here -->
+                            <div class="tied-rakhi" id="tiedRakhi">
+                                <div class="rakhi-center tied-bead"></div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Sweet Eater / Mouth Dropzone -->
+                        <div class="mouth-dropzone" id="mouthDropzone">
+                            <div class="mouth-opening"></div>
+                            <span class="mouth-label">Feed Sweet Here</span>
+                        </div>
+
+                        <div class="ritual-status-box" id="ritualStatus">
+                            <p><i class="fa-solid fa-circle-info"></i> Guide: Start by lighting the Diya and applying
+                                Tilak!</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="next-indicator" onclick="scrollToSection('letter-section')">
+                <span>Read My Message</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Personalized Message / Letter Section -->
+        <section id="letter-section" class="display-section card-glass">
+            <div class="section-badge">Step 2: A Letter of Love</div>
+            <h2 class="section-title">A Message for You</h2>
+
+            <div class="letter-layout">
+
+                <!-- Polaroid Frame -->
+                <div class="polaroid-wrapper">
+                    <div class="polaroid-frame">
+                        <div class="marigold-clip"></div>
+                        <div class="photo-container" id="photoContainer">
+                            <img id="sisterPhoto" src="assets/celebration.png" alt="Our Memory" class="photo-img">
+                        </div>
+                        <div class="polaroid-caption" id="photoCaption">
+                            ❤️
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Letter Scroll -->
+                <div class="scroll-letter">
+                    <div class="scroll-wood scroll-top"></div>
+                    <div class="scroll-paper">
+                        <div class="scroll-header">
+                            <span class="dear-label">Dearest <span id="letterRecipient">DEVI PRASANNA</span>,</span>
+                        </div>
+                        <div class="scroll-body">
+                            <p id="letterContent">
+                                Thank you for being the most supportive, wonderful, and caring sister in the entire
+                                world. Through all the fights, laughs, and secret-sharing, you've always been my
+                                constant anchor. Today, as I promise to always stand protectively by your side, I want
+                                to say how incredibly lucky I am to have you as my sibling.
+                            </p>
+                            <p>
+                                May your life be filled with endless happiness, success, and cookies! I hope this
+                                digital Rakhi brings a smile to your face. Let's make more beautiful memories together!
+                            </p>
+                        </div>
+                        <div class="scroll-footer">
+                            <span class="signing-label">With infinite love,</span>
+                            <span class="sign-name" id="letterSender">NOKESH</span>
+                        </div>
+                    </div>
+                    <div class="scroll-wood scroll-bottom"></div>
+                </div>
+
+            </div>
+
+            <div class="next-indicator" onclick="scrollToSection('gift-section')">
+                <span>Claim Your Gift</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- The Gift Unwrapping Section -->
+        <section id="gift-section" class="display-section card-glass">
+            <div class="section-badge">Step 3: Unveil Your Surprise</div>
+            <h2 class="section-title">The Gift Box</h2>
+            <p class="section-desc">No Rakhi is complete without a gift code or custom promise! Click the beautiful gift
+                box below to reveal your prize.</p>
+
+            <div class="gift-box-display">
+
+                <!-- Live Canvas Confetti -->
+                <canvas id="giftConfetti"></canvas>
+
+                <div class="gift-box-container" id="giftBoxContainer" onclick="unwrapGift()">
+                    <!-- The box Lid -->
+                    <div class="gift-box-lid" id="giftLid">
+                        <div class="gift-ribbon-v"></div>
+                        <div class="gift-ribbon-h"></div>
+                        <div class="gift-bow"></div>
+                    </div>
+                    <!-- The box Body -->
+                    <div class="gift-box-body">
+                        <div class="gift-ribbon-v"></div>
+                        <div class="gift-ribbon-h"></div>
+                    </div>
+                </div>
+
+                <!-- The revealed Voucher Card -->
+                <div class="gift-voucher-card hide-voucher" id="giftVoucher">
+                    <div class="voucher-glow"></div>
+                    <div class="voucher-header">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Specially Crafted Gift <i
+                            class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="voucher-title">GOLDEN SISTER VOUCHER</div>
+
+                    <div class="voucher-content">
+                        <div class="voucher-watermark">Rakhi 2026</div>
+                        <p class="voucher-text" id="giftMessage">
+                            🎟️ This voucher entitles the bearer to <strong>One shopping trip paid entirely by your
+                                beloved brother!</strong>
+                        </p>
+                        <div class="voucher-terms">
+                            <span>Redeemable: Anytime, with a warm hug!</span>
+                            <span>Verified: Brother's Seal of Love</span>
+                        </div>
+                    </div>
+
+                    <div class="coupon-code">
+                        <span>PROMO CODE:</span>
+                        <strong id="promoCodeText">BESTSISTER2026</strong>
+                        <button class="copy-btn" onclick="copyPromo()" title="Copy Promo Code">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="gift-reset-container">
+                <button class="sub-btn" id="closeGiftBtn" onclick="resetGiftBox()" style="display: none;">
+                    <i class="fa-solid fa-gift"></i> Wrap Box Again
+                </button>
+            </div>
+
+        </section>
+
+
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Made with ❤️ for Raksha Bandhan 2026</p>
+            <div class="footer-decorations">
+                <span>💮</span>
+                <span>🌸</span>
+                <span>💮</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Audio elements & Script -->
+    <!-- Web Audio API will synthesize temple bells and classical sitar/flute tones dynamically! -->
+    <script src="app.js"></script>
+</body>
+
+</html>
